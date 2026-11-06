@@ -16,7 +16,7 @@ let failures = 0;
 const check = (ok, what) => { console.log(`${ok ? 'PASS' : 'FAIL'}  ${what}`); if (!ok) failures++; };
 
 const given = process.argv.slice(2).find((a) => a.startsWith('http'));
-const port = Number(process.env.E2E_PORT) || 6043;
+const port = Number(process.env.E2E_PORT) || 7713;
 const base = given ? given.replace(/\/$/, '') : `http://127.0.0.1:${port}`;
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'studio-e2e-'));
 const shots = path.join(root, '.data', 'e2e-screenshots');
@@ -34,7 +34,7 @@ try {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true });
   const page = await ctx.newPage();
   const foreign = []; const errors = [];
-  page.on('request', (r) => { if (!r.url().startsWith(base) && !r.url().startsWith('data:') && !r.url().startsWith('blob:') && !r.url().startsWith('http://localhost:6049/')) foreign.push(r.url()); /* 6049 is this script's own host page for the iframe test */ });
+  page.on('request', (r) => { if (!r.url().startsWith(base) && !r.url().startsWith('data:') && !r.url().startsWith('blob:') && !r.url().startsWith('http://localhost:7719/')) foreign.push(r.url()); /* 6049 is this script's own host page for the iframe test */ });
   page.on('pageerror', (e) => errors.push(e.message));
   page.on('console', (m) => { if (m.type() === 'error' && !/status of 422/.test(m.text()) && !/Framing .*frame-ancestors 'none'/.test(m.text())) errors.push(m.text()); /* the 422 is the bad import on purpose */ });
   page.on('dialog', (d) => d.accept());
@@ -232,10 +232,10 @@ try {
   const [stepDl] = await Promise.all([page.waitForEvent('download'), T('export-svg').click()]);
   const stepSvg = fs.readFileSync(await stepDl.path(), 'utf8');
   check((stepSvg.match(/marker-end="url\(#ahh\)"/g) || []).length === 1 && stepSvg.includes('opacity="0.35"'), 'exporting mid-walkthrough highlights exactly the focused arrow and fades later ones');
-  await page.getByRole('button', { name: /Toggle dark/ }).click();
+  await T('theme').selectOption('dark');
   const [darkDl] = await Promise.all([page.waitForEvent('download'), T('export-svg').click()]);
   check(fs.readFileSync(await darkDl.path(), 'utf8').includes('fill="#12161d"'), 'dark theme exports a dark page');
-  await page.getByRole('button', { name: /Toggle dark|Light/ }).click(); await T('reset').click();
+  await T('theme').selectOption(''); await T('reset').click();
   await page.screenshot({ path: path.join(shots, '5-exports-page.png') });
   fs.writeFileSync(path.join(shots, 'mcp-step-up.png'), png); fs.writeFileSync(path.join(shots, 'mcp-step-up.svg'), svgText);
   // Step and story editor: edit a copy's steps, save, reload, and see them (with story link) on the step cards.
@@ -268,8 +268,8 @@ try {
   const http = await import('node:http');
   const hostPage = `<!doctype html><title>host</title><iframe id="emb" title="diagram" width="900" height="560" src="${base}/?embed=1&d=mcp-step-up&speed=slow"></iframe><iframe id="full" title="full" width="400" height="200" src="${base}/"></iframe><iframe id="small" title="small" width="300" height="200" src="${base}/?embed=1&d=ciba-link"></iframe><iframe id="pan" title="pan" width="600" height="400" src="${base}/?embed=1&d=ciba-link&panel=1&autoplay=1&speed=slow"></iframe>`;
   const hostServer = http.createServer((_q, r) => { r.setHeader('Content-Type', 'text/html'); r.end(hostPage); });
-  await new Promise((res) => hostServer.listen(6049, '127.0.0.1', res));
-  const hostOrigin = 'http://localhost:6049';
+  await new Promise((res) => hostServer.listen(7719, '127.0.0.1', res));
+  const hostOrigin = 'http://localhost:7719';
   await page.goto(`${hostOrigin}/host`);
   const emb = page.frameLocator('#emb');
   await emb.getByTestId('embed').waitFor();
@@ -356,11 +356,28 @@ try {
   await filePage.close();
   // Dark mode, small screen: no horizontal scroll.
   await T('picker').selectOption('mcp-step-up');
-  await page.getByRole('button', { name: /Toggle dark/ }).click();
+  await T('theme').selectOption('dark');
   check(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'dark theme applies');
   await page.setViewportSize({ width: 390, height: 800 });
   check(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'no horizontal page scroll at phone width');
   await page.screenshot({ path: path.join(shots, '3-phone-dark.png'), fullPage: true });
+
+  // Prove-it checklist: both validated diagrams show the panel; ticking works; tally updates.
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(`${base}/?d=personal-agent-chatgpt`); await T('prove-panel').waitFor();
+  const paChecks = await page.locator('[data-testid^="prove-check-"]').count();
+  check(paChecks === 8, `personal-agent diagram shows 8 prove-it claims (found ${paChecks})`);
+  check((await T('prove-tally').innerText()).includes('Checked 0 of 8'), 'tally starts at 0 of 8');
+  await page.locator('[data-testid="prove-check-pa-1"]').check();
+  check((await T('prove-tally').innerText()).includes('Checked 1 of 8'), 'ticking a claim updates the tally');
+  check((await page.locator('.prove-row.done').count()) === 1, 'a ticked claim is marked done');
+  check((await T('prove-panel').innerText()).includes('Gateway introspection valid'), 'evidence text is shown per claim');
+  await page.goto(`${base}/?d=digital-assistant-v2`); await T('prove-panel').waitFor();
+  const daChecks = await page.locator('[data-testid^="prove-check-"]').count();
+  check(daChecks === 6, `digital-assistant diagram shows 6 prove-it claims (found ${daChecks})`);
+  check((await T('prove-tally').innerText()).includes('Checked 0 of 6'), 'tally resets per diagram (session-local)');
+  // both diagrams render all boxes with no overlap via the all-diagrams loop above
+  await page.screenshot({ path: path.join(shots, '6-prove-panel.png') });
 
   check(foreign.length === 0, `no request left the origin${foreign.length ? ': ' + foreign.join(', ') : ''}`);
   check(errors.length === 0, `no console or page errors${errors.length ? ': ' + errors.join(' | ') : ''}`);

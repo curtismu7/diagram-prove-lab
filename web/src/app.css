@@ -100,3 +100,15 @@ a { color: var(--status-info); }
 .mode-toggle button { border: 0; border-radius: 0; padding: 3px 12px; background: var(--surface-2); color: var(--text); font-size: 0.85rem; cursor: default; }
 .mode-toggle button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); font-weight: 700; }
 .mode-toggle button:disabled { opacity: 0.6; }
+
+/* Prove-it checklist */
+.prove { border-top: 1px solid var(--border); margin-top: 24px; padding-top: 12px; }
+.prove h3 { margin: 0 0 4px; }
+.prove-list { list-style: none; margin: 8px 0; padding: 0; }
+.prove-row { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; }
+.prove-row.done { background: color-mix(in srgb, var(--ok, #2e7d32) 10%, transparent); }
+.prove-row label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.prove-prompt { display: block; font-size: 12px; margin-top: 2px; }
+.prove-prompt code { background: var(--surface-2, #f3f3f3); padding: 1px 6px; border-radius: 4px; }
+.prove-copy { font-size: 11px; margin-left: 4px; cursor: pointer; }
+.prove-evidence { display: block; font-size: 12px; color: var(--muted); margin-top: 3px; }

@@ -102,11 +102,11 @@ export function createApp({ dataDir, env = process.env, webDir = path.resolve(he
   app.delete('/api/diagrams/:id', (req, res) => {
     try { store.remove(req.params.id) ? res.json({ ok: true }) : res.status(404).json({ error: 'not_found' }); } catch (e) { fail(res, e); }
   });
+  app.get('/api/shelf', (_req, res) => { res.set('Cache-Control', 'no-store'); res.json(shelfInfo()); }); // the header "Shelf" button
   app.use('/api', (_req, res) => res.status(404).json({ error: 'not_found' }));
 
   if (fs.existsSync(webDir)) {
     app.use(express.static(webDir));
-app.get('/api/shelf', (_req, res) => { res.set('Cache-Control', 'no-store'); res.json(shelfInfo()); }); // the header "Shelf" button
     app.get('*', (_req, res) => res.sendFile(path.join(webDir, 'index.html')));
   }
   app.use((err, _req, res, _next) => res.status(err.status === 413 ? 413 : 400).json({ error: err.status === 413 ? 'too_large' : 'bad_request' }));

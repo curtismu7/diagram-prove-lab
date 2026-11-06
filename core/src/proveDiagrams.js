@@ -1,0 +1,113 @@
+// The two production diagrams this lab validates: personal-agent (ChatGPT variant) and
+// digital-assistant V2 (GW/Authorize). Values in the token notes are LIVE-VALIDATED — captured
+// from real runs of the AI-DEMO2 personal-agent studio (sub=demouser, real client ids, observed
+// scope narrowing, observed HITL). See the Prove tab: every claim maps to a prompt + evidence.
+// Colors are the shared --dg-* roles; blue dashed = token overlay hops.
+
+export const PERSONAL_AGENT_CHATGPT = {
+  schema: 'diagram-prove-lab/1',
+  id: 'personal-agent-chatgpt',
+  title: 'Personal Agent — ChatGPT (V2 GW/Authorize, live-validated)',
+  lede: 'ChatGPT (browser + Desktop) as the personal agent. Every token claim was captured from a real run of the demo: sub=demouser, agent client 0b412e8b-…, RFC 8693 exchange with act.sub, scope narrowed 7 → 2, Gateway introspection valid, HITL step-up observed.',
+  groups: {
+    actor: { label: 'Actors', color: 'blue' },
+    agent: { label: 'Agent runtime', color: 'red' },
+    token: { label: 'Token service', color: 'amber' },
+    gateway: { label: 'MCP gateway', color: 'red' },
+    resource: { label: 'Resources', color: 'grey' },
+  },
+  nodes: [
+    { id: 'user', group: 'actor', label: 'User', sub: ['requests via ChatGPT'], x: 0, y: 240 },
+    { id: 'pingsess', group: 'actor', label: 'Ping Session', sub: ['sign-in → user token', 'sub: demouser', 'iss: pf.example.com:9031'], x: 220, y: 240 },
+    { id: 'chatb', group: 'actor', label: 'ChatGPT in browser', sub: ['user surface'], x: 440, y: 170 },
+    { id: 'gptd', group: 'actor', label: 'ChatGPT Desktop', sub: ['user surface'], x: 440, y: 310 },
+    { id: 'agent1', group: 'agent', label: 'ChatGPT Agent runtime', sub: ['acts for the user', 'OAuth client: 0b412e8b-…'], x: 680, y: 240 },
+    { id: 'llm', group: 'agent', label: 'LLM (OpenAI)', sub: ['plans tool calls'], x: 680, y: 400 },
+    { id: 'ats', group: 'token', label: 'Agentic Token Service', sub: ['Orchestration · Agent', 'Token Exchange · Client Cred', 'mints agent + TX tokens'], x: 680, y: 60 },
+    { id: 'authz', group: 'token', label: 'Authorization Server', sub: ['introspection'], x: 950, y: 60 },
+    { id: 'gw', group: 'gateway', label: 'Agent Gateway', sub: ['Route: api.example.com:3036/mcp', 'fine-grained authorization via ATS'], x: 950, y: 240 },
+    { id: 'mcp', group: 'resource', label: 'MCP', sub: ['api.example.com:3036/mcp', 'tools/list → 401 → 243 permitted'], x: 1200, y: 240 },
+    { id: 'apigw', group: 'resource', label: 'API Gateway', sub: ['per-call policy'], x: 1420, y: 240 },
+    { id: 'rs', group: 'resource', label: 'RS / API', sub: ['real data returned', '(courses, standing)'], x: 1620, y: 240 },
+  ],
+  edges: [
+    { source: 'user', target: 'pingsess', label: '1 request · Human token issued (sub=demouser)' },
+    { source: 'pingsess', target: 'chatb', label: 'session' },
+    { source: 'pingsess', target: 'gptd', label: 'session' },
+    { source: 'chatb', target: 'agent1', label: '2 JSON-RPC · Agent token (client_credentials)' },
+    { source: 'gptd', target: 'agent1', label: '2 JSON-RPC · Agent token (client_credentials)' },
+    { source: 'agent1', target: 'llm', label: 'prompt', dashed: true },
+    { source: 'ats', target: 'agent1', label: 'Request token', dashed: true },
+    { source: 'ats', target: 'authz', label: 'Introspect token', dashed: true },
+    { source: 'agent1', target: 'gw', label: '3 tools/call · TX token (sub=demouser, act=agent, scope 7 → 2)', color: 'token' },
+    { source: 'gw', target: 'authz', label: 'fine-grained authorization', dashed: true },
+    { source: 'gw', target: 'mcp', label: '4/5 forward · MCP token (aud: api.example.com:3036/mcp)' },
+    { source: 'mcp', target: 'apigw', label: 'request' },
+    { source: 'apigw', target: 'rs', label: 'allowed call' },
+  ],
+  steps: [
+    { title: 'Sign-in', what: 'User authenticates; user token issued (sub=demouser, aud=enduser.example.com, RS256). Validated: pipeline step "Sign-in sub demouser".', edges: [0, 1, 2] },
+    { title: 'Agent token', what: 'Agent authenticates with its own client (client_credentials). Validated: Token Chain "Actor token" card.', edges: [3, 4] },
+    { title: 'Token exchange', what: 'RFC 8693: subject=user token, actor=agent token → TX token (sub=demouser, act.sub=agent, aud=api.example.com:3036/mcp, scope narrowed 7 → 2). Validated: "Exchanged token" card + "Exchange scope narrowed 7 → 2".', edges: [8] },
+    { title: 'MCP protection', what: 'Tokenless tools/list → 401; with token → 243 tools permitted. Validated: pipeline steps 4-5.', edges: [9, 10] },
+    { title: 'Gateway validation', what: 'tools/call 401 → Gateway introspection valid. Validated: pipeline steps 13-14.', edges: [10, 11, 12] },
+    { title: 'Fine-grained decision', what: 'Authorize engine=pingone per tool; sensitive tool runs deeper A2A delegation (act-chain depth 2, scope gateway:mcp:invoke,finaid:read). Validated: sensitive-finance run.', edges: [6] },
+    { title: 'HITL', what: 'Sensitive action pauses: "Transaction requires human approval (HITL consent)"; step-up in flight; Gateway authorize INDETERMINATE. Validated: register-for-course run.', edges: [7] },
+    { title: 'Intent token', what: 'BFF mints intent + tools-allowed + prompt_hash (not the AS). Validated: "Intent token" card.', edges: [] },
+  ],
+};
+
+export const DIGITAL_ASSISTANT_V2 = {
+  schema: 'diagram-prove-lab/1',
+  id: 'digital-assistant-v2',
+  title: 'Digital Assistant — V2 GW/Authorize (live-validated)',
+  lede: 'The original V2 architecture: Agentic Token Service (Orchestration/Agent/Token Exc/Client Cred), Authorization, agent1 runtime, Agent Gateway with per-MCP routes, MCP → API Gateway → RS/API. Token overlay: 1 Human, 2 Agent, 3 TX (sub+act), 4/5 MCP tokens per aud.',
+  groups: {
+    actor: { label: 'Actors', color: 'blue' },
+    agent: { label: 'Agent runtime', color: 'red' },
+    token: { label: 'Token service', color: 'amber' },
+    gateway: { label: 'MCP gateway', color: 'red' },
+    resource: { label: 'Resources', color: 'dark' },
+  },
+  nodes: [
+    { id: 'user', group: 'actor', label: 'User', sub: [], x: 0, y: 240 },
+    { id: 'pingsess', group: 'actor', label: 'Ping Session', sub: [], x: 200, y: 240 },
+    { id: 'olb', group: 'actor', label: 'OLB App + chatbot', sub: [], x: 400, y: 240 },
+    { id: 'agent1', group: 'agent', label: 'agent1', sub: ['Shadow IT'], x: 640, y: 240 },
+    { id: 'llm', group: 'agent', label: 'LLM', sub: [], x: 640, y: 400 },
+    { id: 'ats', group: 'token', label: 'Agentic Token Service', sub: ['Orchestration · Agent', 'Token Exc · Client Cred'], x: 640, y: 60 },
+    { id: 'authz', group: 'token', label: 'Authorization', sub: ['introspect'], x: 950, y: 60 },
+    { id: 'gw', group: 'gateway', label: 'Agent Gateway', sub: ['Route: mcp-olb.example.com/mcp', 'Route: mcp-invest.example.com/mcp'], x: 950, y: 240 },
+    { id: 'mcpolb', group: 'resource', label: 'MCP mcp-olb', sub: ['aud: mcp-olb.example.com'], x: 1200, y: 120 },
+    { id: 'mcpinv', group: 'resource', label: 'MCP mcp-invest', sub: ['aud: mcp-invest.example.com'], x: 1200, y: 400 },
+    { id: 'apigw', group: 'resource', label: 'API Gateway', sub: [], x: 1430, y: 260 },
+    { id: 'rs', group: 'resource', label: 'RS', sub: ['aud: olb-resource.example.com', '/balance /transfer'], x: 1650, y: 100 },
+    { id: 'api', group: 'resource', label: 'API', sub: ['investments-resource', 'API key via vault'], x: 1650, y: 420 },
+  ],
+  edges: [
+    { source: 'user', target: 'pingsess', label: '1 opens app' },
+    { source: 'pingsess', target: 'olb', label: 'session' },
+    { source: 'olb', target: 'agent1', label: '2 request' },
+    { source: 'agent1', target: 'llm', label: 'JSON-RPC', dashed: true },
+    { source: 'ats', target: 'agent1', label: 'Request token', dashed: true },
+    { source: 'ats', target: 'authz', label: 'Introspect', dashed: true },
+    { source: 'agent1', target: 'gw', label: '3 JSON-RPC · TX token', color: 'token' },
+    { source: 'gw', target: 'authz', label: 'Authorization check', dashed: true },
+    { source: 'gw', target: 'mcpolb', label: '4 forward · MCP token (mcp-olb)' },
+    { source: 'gw', target: 'mcpinv', label: '5 forward · MCP token (mcp-invest)' },
+    { source: 'mcpolb', target: 'apigw', label: 'request' },
+    { source: 'mcpinv', target: 'apigw', label: 'request · API key (vault)' },
+    { source: 'apigw', target: 'rs', label: 'allowed call' },
+    { source: 'apigw', target: 'api', label: 'allowed call' },
+  ],
+  steps: [
+    { title: 'Sign-in and the dual Person tokens', what: 'Person (App) token for direct API calls, Person (Agent) token (may_act=agent1) for the agent path — the use_agent scope distinction. Partially validated: user token seen live; the silent prompt=none second token is the diagram claim not yet exercised.', edges: [0, 1] },
+    { title: 'Agent token', what: 'agent1 authenticates with its own client_id (client_credentials). Validated live.', edges: [2] },
+    { title: 'Token exchange', what: 'Person token + Agent token → TX Token (sub=user1, act=agent1). The original page asks "Why Token Exchange?" — four mitigated risks. Validated live with the RFC 8693 exchange.', edges: [6] },
+    { title: 'Per-MCP tokens', what: 'One token per MCP server aud (mcp-olb, mcp-invest) — the original "Agent manages multiple tokens" complexity; RFC 8707 is the proposed simplification. The gateway mediates.', edges: [7, 8, 9] },
+    { title: 'API Gateway', what: 'MCP calls the resource through an API Gateway; allowed calls only. Matches the LAB Pattern tab (MCP → API GW → Resource).', edges: [12, 13] },
+    { title: 'Rules enforced', what: 'Agent MUST have a Person token; MCP Tools MUST have an MCP Server token; incoming token must carry proper scope and aud, with the Agent explicit in act. All observed live.', edges: [3, 4, 5, 10, 11] },
+  ],
+};
+
+export const PROVE_DIAGRAMS = [PERSONAL_AGENT_CHATGPT, DIGITAL_ASSISTANT_V2];

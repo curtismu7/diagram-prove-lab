@@ -140,6 +140,11 @@
       "href": "/?d=devicefirstsignin-signin"
     },
     {
+      "id": "digital-assistant-v2",
+      "label": "Digital Assistant — V2 GW/Authorize (live-validated)",
+      "href": "/?d=digital-assistant-v2"
+    },
+    {
       "id": "dot-workbench",
       "label": "Dot workbench",
       "href": "/?d=dot-workbench"
@@ -218,6 +223,11 @@
       "id": "personal-agent",
       "label": "Personal Agent",
       "href": "/?d=personal-agent"
+    },
+    {
+      "id": "personal-agent-chatgpt",
+      "label": "Personal Agent — ChatGPT (V2 GW/Authorize, live-validated)",
+      "href": "/?d=personal-agent-chatgpt"
     },
     {
       "id": "pf-cedar",

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SPEEDS, LARGE_HTML_BYTES, TEMPLATES, history as H, autoLayout, newDiagram, toHtml, toSvg, addEdge, addNode, captions, moveNode, removeEdge, removeNode, renameNode, resetLayout, setEdgeLabel, validateDiagram } from "@diagram-prove-lab/core";
 import * as api from "./api.js";
 import Canvas from "./Canvas.jsx";
+import ProvePanel from "./ProvePanel.jsx";
 import StepLinks from "./StepLinks.jsx";
 import WirePanel from "./WirePanel.jsx";
 import DetailsEditor from "./DetailsEditor.jsx";
@@ -378,6 +379,8 @@ export default function App() {
             ))}
           </ol>
         )}
+
+        <ProvePanel diagramId={diagram.id} />
       </main>
     </div>
   );
