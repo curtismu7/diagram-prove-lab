@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+/**
+ * Generates content-pack.json (repo root) in the demo-content-pack/1 format (docs/content-pack.schema.json).
+ * Glossary from content/terms.json; cards are the studio's own views. Deterministic: sorted by id, no timestamps.
+ *   node scripts/build-content-pack.mjs [--commit=<sha>]
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { SAMPLES, STORIES, storyFile } from '@diagram-prove-lab/core';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+export const PACK_PATH = path.join(ROOT, 'content-pack.json');
+const readJson = (rel) => JSON.parse(fs.readFileSync(path.join(ROOT, rel), 'utf8'));
+const byId = (a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+
+const CARDS = [
+  { id: 'studio', label: 'Diagram studio', description: 'Pick a flow diagram, drag the boxes, Simulate the arrows, change the speed, Reset, then save or export it.', group: 'try-it', href: '/', terms: ['flow-diagram', 'walkthrough'], story: 'S01' },
+  { id: 'edit', label: 'Edit and export', description: 'Add boxes and arrows, rename them, save a copy and export the diagram as JSON to share or re-import.', group: 'try-it', href: '/', terms: ['diagram-as-data'] },
+];
+
+export function buildPack({ commit } = {}) {
+  const pkg = readJson('package.json');
+  const pack = {
+    schema: 'demo-content-pack/1',
+    id: 'diagram-prove-lab',
+    title: 'Diagram Prove Lab',
+    version: pkg.version,
+    ...(commit ? { source: { repo: 'diagram-prove-lab', commit } } : {}),
+    demo: { id: 'diagram-prove-lab', name: 'Diagram Prove Lab', catalog: 'E3', baseUrl: 'http://localhost:7710', doctor: '/api/health', tags: ['diagrams', 'reactflow', 'walkthrough'] },
+    glossary: readJson('content/terms.json').sort(byId),
+    sources: [],
+    cards: CARDS.map(({ href, ...c }) => ({ ...c, action: { type: 'route', href } })).sort(byId),
+    diagrams: SAMPLES.map((d) => ({ id: d.id, label: d.title, href: `/?d=${d.id}` })).sort(byId),
+    stories: STORIES.map((x) => ({ id: x.id, title: x.title, say: x.control, file: storyFile(x) })).sort(byId),
+  };
+  return pack;
+}
+
+/** content/stories/*.json, one per story: [relative path, text]. Committed so a pack's `file` pointers resolve. */
+export const storyFiles = () => STORIES.map((x) => [storyFile(x), `${JSON.stringify({ id: x.id, title: x.title, goal: x.goal, obstacle: x.obstacle, control: x.control, modes: ['studio'], demos: ['E3'], steps: x.steps }, null, 2)}\n`]);
+
+/** Writes the story files under `root`; returns the relative paths written. */
+export function writeStoryFiles(root = ROOT) {
+  return storyFiles().map(([rel, text]) => { fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true }); fs.writeFileSync(path.join(root, rel), text); return rel; });
+}
+
+export const serialize = (pack) => `${JSON.stringify(pack, null, 2)}\n`;
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const commit = process.argv.find((a) => a.startsWith('--commit='))?.slice(9);
+  fs.writeFileSync(PACK_PATH, serialize(buildPack({ commit })));
+  writeStoryFiles();
+  console.log(`wrote ${path.relative(process.cwd(), PACK_PATH) || PACK_PATH}`);
+}

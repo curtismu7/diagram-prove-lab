@@ -1,0 +1,28 @@
+# OrbStack:  HOST_PORT=7710 docker compose up --build -d   ->  http://127.0.0.1:7710
+# Do not change the 127.0.0.1 below: the studio has no sign-in, so it must stay on loopback.
+name: diagram-prove-lab
+
+services:
+  diagram-prove-lab:
+    build: .
+    ports:
+      - "127.0.0.1:${HOST_PORT:-7710}:7710"
+    environment:
+      SHELF_URL: ${SHELF_URL:-}
+      PORT: "7710"
+      PROVE_BIND: 0.0.0.0
+      STUDIO_ALLOW_HOST: ""
+    volumes:
+      - studio-data:/data
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:7710/api/health').then(r=>r.json()).then(j=>process.exit(j.state==='ready'?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  studio-data:
