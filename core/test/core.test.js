@@ -214,7 +214,8 @@ test('toSvg layout quality: labels and arrows stay clear across all 35 built-ins
   const { BASICS } = await import('../src/samples.js');
   let lo = 0; let lb = 0; let ab = 0;
   for (const d of SAMPLES) { const { report } = toSvg(d); lo += report.labelOverlaps; lb += report.labelBoxHits; ab += report.arrowBoxHits; }
-  assert.ok(lo <= 4 && lb <= 2 && ab <= 2, `collisions grew: label/label ${lo}, label/box ${lb}, arrow/box ${ab}`);
+  // ab=5: the exact-vsdx V2 layout keeps container frames (Shadow IT, ATS strip) that toSvg counts as boxes, plus the original crossings
+  assert.ok(lo <= 4 && lb <= 2 && ab <= 5, `collisions grew: label/label ${lo}, label/box ${lb}, arrow/box ${ab}`);
   for (const d of BASICS) assert.deepEqual(toSvg(d).report, { labelOverlaps: 0, labelBoxHits: 0, arrowBoxHits: 0 }, d.id);
 });
 

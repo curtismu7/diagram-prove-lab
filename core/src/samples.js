@@ -106,6 +106,7 @@ const linked = (d) => ({ ...d, steps: d.steps.map((st, i) => { const [sid, n, ho
 export const BASICS = [authCode, exchange, mcp, chain].map(linked);
 import { APP_DIAGRAMS } from './apps.js';
 import { PROVE_DIAGRAMS } from './proveDiagrams.js';
+import { V2_EXACT } from './v2Exact.js';
 import { withWire } from './wiredata.js';
 
-export const SAMPLES = [...BASICS, ...LIBRARY, ...APP_DIAGRAMS, ...PROVE_DIAGRAMS].map(withWire);
+export const SAMPLES = [...BASICS, ...LIBRARY, ...APP_DIAGRAMS, ...PROVE_DIAGRAMS, V2_EXACT].map(withWire);

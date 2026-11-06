@@ -318,6 +318,11 @@
       "id": "token-exchange",
       "label": "Token exchange (RFC 8693)",
       "href": "/?d=token-exchange"
+    },
+    {
+      "id": "v2-agent-gw-authorize-exact",
+      "label": "V2 Agent — GW/Authorize (exact from the Lucid .vsdx)",
+      "href": "/?d=v2-agent-gw-authorize-exact"
     }
   ],
   "stories": [
