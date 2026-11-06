@@ -1,6 +1,6 @@
 // The two production diagrams this lab validates: personal-agent (ChatGPT variant) and
 // digital-assistant V2 (GW/Authorize). Values in the token notes are LIVE-VALIDATED — captured
-// from real runs of the AI-DEMO2 personal-agent studio (sub=demouser, real client ids, observed
+// from real runs of the governed personal-agent demo (sub=demouser, real client ids, observed
 // scope narrowing, observed HITL). See the Prove tab: every claim maps to a prompt + evidence.
 // Colors are the shared --dg-* roles; blue dashed = token overlay hops.
 

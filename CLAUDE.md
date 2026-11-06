@@ -12,7 +12,7 @@ diagrams from this data (rule 17). Express API + React Flow web app, npm workspa
 - Use `node --test <files or a glob>`, never a directory. Use exit codes, not parsed `node:test` output (Node 22 prints TAP when piped).
 
 ## Rules that bite
-- Ports 60xx-64xx only (7710 app, 6002 dev). Never 8080, 5173, 3900, 4000, 4400, 4510, 4600-4601, 18080/19080/19090.
+- Ports 7710-7719 only (7710 app, 6002 dev). Never 8080, 5173, 3900, 4000, 4400, 4510, 4600-4601, 18080/19080/19090.
 - No identifiers from other projects in shipped content: only `.example` / `.invalid` hosts, no client ids, tenant ids, real email domains or internal service names.
   `core/test/hygiene.test.js` scans every diagram, story and template. History scan must print 0: `git log -p --all | grep -cF -f ~/.config/demo-kit/forbidden-strings.txt` (never print the list).
 - Loopback-only bind, Host check (421), same-origin writes (Origin check), Docker publishes `127.0.0.1:` only (tested). Only `/?embed=1` may be framed, and only from loopback origins.

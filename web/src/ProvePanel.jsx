@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // Prove-it checklist: every claim on the two validated diagrams maps to a runnable prompt
-// in the AI-DEMO2 Personal Agent Studio and the evidence to look for. Ticking is session-local
+// in the governed Personal Agent Studio and the evidence to look for. Ticking is session-local
 // (a checklist, not a test result); the tally keeps the presenter honest.
 
 const CLAIMS = {

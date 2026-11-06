@@ -1,6 +1,8 @@
-# Diagram Prove Lab LAB
+# Diagram Prove Lab
 
-Tier: Tool. A small offline studio for flow diagrams stored as data. Pick a built-in sample (or one you saved), drag the boxes, press
+Tier: Tool. A small offline studio for flow diagrams stored as data, focused on two production diagrams: the Personal Agent (ChatGPT) architecture and the Digital Assistant V2 (GW/Authorize) architecture, both LIVE-VALIDATED — every token claim on them was captured from a real governed-agent run (RFC 8693 sub+act, scope narrowed 7 → 2, Gateway introspection, HITL). Each diagram carries a Prove-it-live checklist: one prompt + the evidence to look for per claim, so a presenter can show the diagram and then prove it with the governed demo. Reusable for validating future diagrams: add a sample in core/src/proveDiagrams.js and a claim list in web/src/ProvePanel.jsx.
+
+Pick a built-in sample (or one you saved), drag the boxes, press
 **Simulate** to walk the arrows in order, **Pause / Resume / Prev / Next**, change the **Speed**, **Reset**, edit boxes and
 arrows, **Save a copy**, and **Export** or **Import** the diagram as a JSON file. Diagrams are drawn with React Flow.
 
