@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <mxfile host="app.diagrams.net" modified="2026-11-06T00:00:00.000Z" agent="opencode" version="24.0.0">
   <diagram id="v2-agent-gw-authorize-exact" name="V2 Agent - GW/Authorize (vsdx-exact)">
     <mxGraphModel dx="2400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="850" math="0" shadow="0">
@@ -104,79 +104,79 @@
         <mxCell id="apigw2" value="API Gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d2e9;strokeColor=#8077ad;fontColor=#1a1a1a;fontSize=11;" vertex="1" parent="1">
           <mxGeometry x="2210" y="572" width="100" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="e0" value="User Authentication" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#666666;fontSize=9;dashed=1;" edge="1" parent="1" source="pingsess" target="ats">
+        <mxCell id="e0" value="3. User Authentication (sign-in)" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#666666;fontSize=9;dashed=1;" edge="1" parent="1" source="pingsess" target="ats">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e1" value="Request" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="chatbot" target="agent1">
+        <mxCell id="e1" value="4. Request to the agent (JSON-RPC)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="chatbot" target="agent1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e2" value="User request" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="user" target="olb">
+        <mxCell id="e2" value="1. User opens the app - user request" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="user" target="olb">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e3" value="" style="edgeStyle=none;html=1;strokeColor=#333333;endArrow=none;" edge="1" parent="1" source="olb" target="chatbot">
+        <mxCell id="e3" value="2. Opens the Chat UX" style="edgeStyle=none;html=1;strokeColor=#333333;endArrow=none;" edge="1" parent="1" source="olb" target="chatbot">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e4" value="JSON-RPC request" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="agent1" target="gw">
+        <mxCell id="e4" value="10. Agent calls the Agent Gateway (JSON-RPC / tools/call)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="agent1" target="gw">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e5" value="" style="edgeStyle=none;html=1;strokeColor=#333333;endArrow=none;" edge="1" parent="1" source="agent1" target="llm">
+        <mxCell id="e5" value="5. Agent consults the LLM" style="edgeStyle=none;html=1;strokeColor=#333333;endArrow=none;" edge="1" parent="1" source="agent1" target="llm">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e6" value="" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="agent1" target="texc">
+        <mxCell id="e6" value="7. Agent requests the token exchange" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="agent1" target="texc">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e7" value="" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="agent1" target="agtsvc">
+        <mxCell id="e7" value="6. Agent pulls its own identity from the ATS Agent service" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="agent1" target="agtsvc">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e8" value="" style="edgeStyle=none;html=1;strokeColor=#333333;endArrow=none;" edge="1" parent="1" source="ats" target="authz">
+        <mxCell id="e8" value="8. ATS talks to the Authorization server" style="edgeStyle=none;html=1;strokeColor=#333333;endArrow=none;" edge="1" parent="1" source="ats" target="authz">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e9" value="Introspect token" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#666666;fontSize=9;dashed=1;" edge="1" parent="1" source="authz" target="introspect">
+        <mxCell id="e9" value="9. Introspect token" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#666666;fontSize=9;dashed=1;" edge="1" parent="1" source="authz" target="introspect">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e10" value="Forward tool call" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="gw" target="mcp_olb">
+        <mxCell id="e10" value="12. Forward tool call to MCP (mcp-olb)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="gw" target="mcp_olb">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e11" value="Request" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="gw" target="mcp_inv">
+        <mxCell id="e11" value="13. Request to MCP (mcp-invest)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="gw" target="mcp_inv">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e12" value="Authorization check" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#666666;fontSize=9;dashed=1;" edge="1" parent="1" source="gw" target="authz">
+        <mxCell id="e12" value="11. Authorization check" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#666666;fontSize=9;dashed=1;" edge="1" parent="1" source="gw" target="authz">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e13" value="Request" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="mcp_olb" target="texc">
+        <mxCell id="e13" value="14. MCP pulls an exchanged token from Token Exc" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="mcp_olb" target="texc">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e14" value="Request" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="mcp_olb" target="ccred">
+        <mxCell id="e14" value="15. MCP pulls client credentials" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="mcp_olb" target="ccred">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e15" value="Request" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="mcp_olb" target="apigw1">
+        <mxCell id="e15" value="16. MCP calls the API Gateway" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="mcp_olb" target="apigw1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e16" value="Allowed call" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="apigw1" target="rs">
+        <mxCell id="e16" value="17. Allowed call to the Resource Server" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="apigw1" target="rs">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e17" value="Request - API key (via vault)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="mcp_inv" target="apigw2">
+        <mxCell id="e17" value="18. MCP calls the API Gateway (API key via vault)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="mcp_inv" target="apigw2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e18" value="Allowed call" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="apigw2" target="api">
+        <mxCell id="e18" value="19. Allowed call to the API" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="apigw2" target="api">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="tok0" value="1 - Human token" style="edgeStyle=none;html=1;strokeColor=#2f7bd6;fontSize=9;fontStyle=1;dashed=1;strokeWidth=2;" edge="1" parent="1" source="pingsess" target="user">
+        <mxCell id="tok0" value="20. TOKEN: Human token (sub=user1, may_act=agent1)" style="edgeStyle=none;html=1;strokeColor=#2f7bd6;fontSize=9;fontStyle=1;dashed=1;strokeWidth=2;" edge="1" parent="1" source="pingsess" target="user">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="tok1" value="2 - Agent token" style="edgeStyle=none;html=1;strokeColor=#2f7bd6;fontSize=9;fontStyle=1;dashed=1;strokeWidth=2;" edge="1" parent="1" source="ats" target="agent1">
+        <mxCell id="tok1" value="21. TOKEN: Agent token (client_credentials, client agent1)" style="edgeStyle=none;html=1;strokeColor=#2f7bd6;fontSize=9;fontStyle=1;dashed=1;strokeWidth=2;" edge="1" parent="1" source="ats" target="agent1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="tok2" value="3 - TX token (sub=user1, act=agent1)" style="edgeStyle=none;html=1;strokeColor=#b8860b;fontSize=9;fontStyle=1;dashed=1;strokeWidth=2;" edge="1" parent="1" source="agent1" target="gw">
+        <mxCell id="tok2" value="22. TOKEN: TX token (RFC 8693 - sub=user1, act=agent1)" style="edgeStyle=none;html=1;strokeColor=#b8860b;fontSize=9;fontStyle=1;dashed=1;strokeWidth=2;;dashed=1;strokeWidth=2;fontStyle=1;" edge="1" parent="1" source="agent1" target="gw">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="tok3" value="4 - MCP token (aud: mcp-olb)" style="edgeStyle=none;html=1;strokeColor=#2f7bd6;fontSize=9;fontStyle=1;dashed=1;strokeWidth=2;" edge="1" parent="1" source="gw" target="mcp_olb">
+        <mxCell id="tok3" value="23. TOKEN: MCP token (aud: mcp-olb)" style="edgeStyle=none;html=1;strokeColor=#2f7bd6;fontSize=9;fontStyle=1;dashed=1;strokeWidth=2;" edge="1" parent="1" source="gw" target="mcp_olb">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="tok4" value="5 - MCP token (aud: mcp-invest)" style="edgeStyle=none;html=1;strokeColor=#2f7bd6;fontSize=9;fontStyle=1;dashed=1;strokeWidth=2;" edge="1" parent="1" source="gw" target="mcp_inv">
+        <mxCell id="tok4" value="24. TOKEN: MCP token (aud: mcp-invest)" style="edgeStyle=none;html=1;strokeColor=#2f7bd6;fontSize=9;fontStyle=1;dashed=1;strokeWidth=2;" edge="1" parent="1" source="gw" target="mcp_inv">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-      </root>
+      <mxCell id="step-table" value="&lt;b&gt;STEP TABLE - V2 Agent GW/Authorize&lt;/b&gt;&lt;br&gt;1. User opens the app - user request &lt;i&gt;[User -&amp;gt; OLB Application]&lt;/i&gt;&lt;br&gt;2. Opens the Chat UX &lt;i&gt;[OLB Application -&amp;gt; chatbot]&lt;/i&gt;&lt;br&gt;3. User Authentication (sign-in) &lt;i&gt;[Ping Session -&amp;gt; Agentic Token Service]&lt;/i&gt;&lt;br&gt;4. Request to the agent (JSON-RPC) &lt;i&gt;[chatbot -&amp;gt; agent1]&lt;/i&gt;&lt;br&gt;5. Agent consults the LLM &lt;i&gt;[agent1 -&amp;gt; LLM]&lt;/i&gt;&lt;br&gt;6. Agent pulls its own identity &lt;i&gt;[agent1 -&amp;gt; Agent (ATS)]&lt;/i&gt;&lt;br&gt;7. Agent requests the token exchange &lt;i&gt;[agent1 -&amp;gt; Token Exc (ATS)]&lt;/i&gt;&lt;br&gt;8. ATS talks to the Authorization server &lt;i&gt;[Agentic Token Service -&amp;gt; Authorization]&lt;/i&gt;&lt;br&gt;9. Introspect token &lt;i&gt;[Authorization -&amp;gt; Introspect]&lt;/i&gt;&lt;br&gt;10. Agent calls the Agent Gateway &lt;i&gt;[agent1 -&amp;gt; Agent Gateway]&lt;/i&gt;&lt;br&gt;11. Authorization check &lt;i&gt;[Agent Gateway -&amp;gt; Authorization]&lt;/i&gt;&lt;br&gt;12. Forward tool call to MCP (mcp-olb) &lt;i&gt;[Agent Gateway -&amp;gt; MCP mcp-olb]&lt;/i&gt;&lt;br&gt;13. Request to MCP (mcp-invest) &lt;i&gt;[Agent Gateway -&amp;gt; MCP mcp-invest]&lt;/i&gt;&lt;br&gt;14. MCP pulls an exchanged token &lt;i&gt;[MCP -&amp;gt; Token Exc (ATS)]&lt;/i&gt;&lt;br&gt;15. MCP pulls client credentials &lt;i&gt;[MCP -&amp;gt; Client Cred (ATS)]&lt;/i&gt;&lt;br&gt;16. MCP calls the API Gateway &lt;i&gt;[MCP -&amp;gt; API Gateway]&lt;/i&gt;&lt;br&gt;17. Allowed call to the Resource Server &lt;i&gt;[API Gateway -&amp;gt; RS]&lt;/i&gt;&lt;br&gt;18. MCP calls the API Gateway (API key via vault) &lt;i&gt;[MCP mcp-invest -&amp;gt; API Gateway]&lt;/i&gt;&lt;br&gt;19. Allowed call to the API &lt;i&gt;[API Gateway -&amp;gt; API]&lt;/i&gt;&lt;br&gt;20. TOKEN: Human token (sub=user1, may_act=agent1) &lt;i&gt;[Ping Session -&amp;gt; User]&lt;/i&gt;&lt;br&gt;21. TOKEN: Agent token (client_credentials) &lt;i&gt;[ATS -&amp;gt; agent1]&lt;/i&gt;&lt;br&gt;22. TOKEN: TX token (RFC 8693, sub+act) &lt;i&gt;[agent1 -&amp;gt; Agent Gateway]&lt;/i&gt;&lt;br&gt;23. TOKEN: MCP token (aud: mcp-olb) &lt;i&gt;[Agent Gateway -&amp;gt; MCP]&lt;/i&gt;&lt;br&gt;24. TOKEN: MCP token (aud: mcp-invest) &lt;i&gt;[Agent Gateway -&amp;gt; MCP]&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=top;fontColor=#1a1a1a;fontSize=9;fillColor=#fbf3c0;strokeColor=#b8ac60;rounded=1;whiteSpace=wrap;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="40" y="560" width="560" height="420" as="geometry" /></mxCell></root>
     </mxGraphModel>
   </diagram>
 </mxfile>
