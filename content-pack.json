@@ -65,6 +65,16 @@
   ],
   "diagrams": [
     {
+      "id": "a2a-da-exact",
+      "label": "A2A — Digital Assistant (from the Lucid .vsdx)",
+      "href": "/?d=a2a-da-exact"
+    },
+    {
+      "id": "a2a-worker-hitl-exact",
+      "label": "A2A — Worker with HITL (from the Lucid .vsdx)",
+      "href": "/?d=a2a-worker-hitl-exact"
+    },
+    {
       "id": "a2aarchitecture-delegation",
       "label": "A2A architecture: delegation",
       "href": "/?d=a2aarchitecture-delegation"
@@ -93,6 +103,16 @@
       "id": "auth-code-pkce",
       "label": "Authorization code with PKCE",
       "href": "/?d=auth-code-pkce"
+    },
+    {
+      "id": "aws-agentcore-exact",
+      "label": "AWS Bedrock Agent Core with Ping (from the Lucid .vsdx)",
+      "href": "/?d=aws-agentcore-exact"
+    },
+    {
+      "id": "bedrock-new-master-exact",
+      "label": "Bedrock New Master (from the Lucid .vsdx)",
+      "href": "/?d=bedrock-new-master-exact"
     },
     {
       "id": "ciba-link",
@@ -198,6 +218,11 @@
       "id": "jev-gallery",
       "label": "Demo gallery",
       "href": "/?d=jev-gallery"
+    },
+    {
+      "id": "mcp-gateway-comparison-exact",
+      "label": "Privilege MCP Gateway vs PingGateway MCP Security Gateway (from the Lucid .vsdx)",
+      "href": "/?d=mcp-gateway-comparison-exact"
     },
     {
       "id": "mcp-obs",
@@ -310,6 +335,16 @@
       "href": "/?d=privilegefirstgateway-gateway"
     },
     {
+      "id": "problem-statement-exact",
+      "label": "Problem Statement: why token exchange? (from the Lucid .vsdx)",
+      "href": "/?d=problem-statement-exact"
+    },
+    {
+      "id": "ref-arch-id4ai-sequence-exact",
+      "label": "Reference architecture: balance check with token exchange (from the Lucid .vsdx)",
+      "href": "/?d=ref-arch-id4ai-sequence-exact"
+    },
+    {
       "id": "sim-push",
       "label": "Simulated push approval",
       "href": "/?d=sim-push"
@@ -318,6 +353,11 @@
       "id": "token-exchange",
       "label": "Token exchange (RFC 8693)",
       "href": "/?d=token-exchange"
+    },
+    {
+      "id": "v1-agent-gw-authorize-exact",
+      "label": "V1 Agent — GW/Authorize (from the Lucid .vsdx)",
+      "href": "/?d=v1-agent-gw-authorize-exact"
     },
     {
       "id": "v2-agent-gw-authorize-exact",

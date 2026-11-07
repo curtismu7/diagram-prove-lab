@@ -52,7 +52,7 @@ export const V2_EXACT = {
    "group": "grey",
    "label": "Ping Session",
    "sub": [],
-   "x": 170,
+   "x": 190,
    "y": 400
   },
   {
