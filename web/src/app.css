@@ -36,7 +36,7 @@ h1 { margin: 0; font-size: 1.25rem; } h2 { margin: 0.25rem 0; font-size: 1.4rem;
 /* Presenter mode: bigger type, bigger canvas, no editing or file controls. */
 :root[data-present="1"] body { font-size: 20px; }
 :root[data-present="1"] [data-admin-only] { display: none; }
-:root[data-present="1"] .canvas { height: max(22rem, calc(100vh - 22rem)); }
+:root[data-present="1"] .canvas { height: max(22rem, calc(100vh - 25rem)); }
 :root[data-present="1"] .box { font-size: 1.05rem; }
 :root[data-present="1"] .box-sub { font-size: 0.9rem; }
 :root[data-present="1"] .react-flow__edge-text { font-size: 14px; }
