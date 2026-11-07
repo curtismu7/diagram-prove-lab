@@ -1,4 +1,5 @@
 # OrbStack:  HOST_PORT=7710 docker compose up --build -d   ->  http://127.0.0.1:7710
+# STUDIO_ALLOW_HOST is the lab-proxy entry host (https://local.ping-devops.com:8443/diagram-prove-lab/).
 # Do not change the 127.0.0.1 below: the studio has no sign-in, so it must stay on loopback.
 name: diagram-prove-lab
 
@@ -11,7 +12,7 @@ services:
       SHELF_URL: ${SHELF_URL:-}
       PORT: "7710"
       PROVE_BIND: 0.0.0.0
-      STUDIO_ALLOW_HOST: ""
+      STUDIO_ALLOW_HOST: "local.ping-devops.com:8443"
     volumes:
       - studio-data:/data
     read_only: true
