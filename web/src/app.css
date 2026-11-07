@@ -1,5 +1,5 @@
 /* App layout and component rules only. Colours, fonts, controls and dark mode come from standalone-ui.css. */
-.page { max-width: 80rem; margin: 0 auto; padding: 1rem 0; }
+.page { max-width: 100rem; margin: 0 auto; padding: 1rem 0; }
 em { font-style: normal; font-weight: 700; }
 h1 { margin: 0; font-size: 1.25rem; } h2 { margin: 0.25rem 0; font-size: 1.4rem; } h3 { margin: 0 0 0.5rem; font-size: 1.05rem; } h4 { margin: 0 0 0.25rem; }
 .lede, .muted { color: var(--muted); } .small { font-size: 0.85rem; }
@@ -11,7 +11,7 @@ h1 { margin: 0; font-size: 1.25rem; } h2 { margin: 0.25rem 0; font-size: 1.4rem;
 .filebtn input { position: absolute; width: 1px; height: 1px; min-height: 0; padding: 0; border: 0; opacity: 0; }
 .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.6rem 0; }
 .caption { min-height: 1.6em; margin: 0.25rem 0; font-weight: 600; }
-.canvas { height: 28rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+.canvas { height: max(28rem, calc(100vh - 30rem)); border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
 .legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; list-style: none; padding: 0; margin: 0.5rem 0; font-size: 0.9rem; }
 .sw { display: inline-block; border: 1px solid var(--border); width: 0.9rem; height: 0.9rem; margin-right: 0.4rem; border-radius: 3px; vertical-align: -2px; }
 .sw--red, .box--red { --c: var(--box-red); } .sw--dark, .box--dark { --c: var(--box-dark); } .sw--grey, .box--grey { --c: var(--box-grey); }
@@ -36,7 +36,7 @@ h1 { margin: 0; font-size: 1.25rem; } h2 { margin: 0.25rem 0; font-size: 1.4rem;
 /* Presenter mode: bigger type, bigger canvas, no editing or file controls. */
 :root[data-present="1"] body { font-size: 20px; }
 :root[data-present="1"] [data-admin-only] { display: none; }
-:root[data-present="1"] .canvas { height: max(22rem, calc(100vh - 19rem)); }
+:root[data-present="1"] .canvas { height: max(22rem, calc(100vh - 22rem)); }
 :root[data-present="1"] .box { font-size: 1.05rem; }
 :root[data-present="1"] .box-sub { font-size: 0.9rem; }
 :root[data-present="1"] .react-flow__edge-text { font-size: 14px; }

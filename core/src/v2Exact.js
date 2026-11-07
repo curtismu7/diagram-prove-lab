@@ -44,16 +44,16 @@ export const V2_EXACT = {
    "group": "actor",
    "label": "User",
    "sub": [],
-   "x": 440,
-   "y": 797
+   "x": 0,
+   "y": 400
   },
   {
    "id": "pingsess",
    "group": "grey",
    "label": "Ping Session",
    "sub": [],
-   "x": 0,
-   "y": 0
+   "x": 170,
+   "y": 400
   },
   {
    "id": "olb",
@@ -62,104 +62,104 @@ export const V2_EXACT = {
    "sub": [
     "Application"
    ],
-   "x": 880,
-   "y": 744
+   "x": 340,
+   "y": 330
   },
   {
    "id": "chatbot",
    "group": "actor",
    "label": "chatbot",
    "sub": [],
-   "x": 1320,
-   "y": 751
+   "x": 340,
+   "y": 470
   },
   {
    "id": "shadow",
    "group": "agent",
    "label": "Shadow IT",
    "sub": [],
-   "x": 0,
-   "y": 91
+   "x": 560,
+   "y": 330
   },
   {
    "id": "agent1",
    "group": "agent",
    "label": "agent1",
    "sub": [],
-   "x": 0,
-   "y": 1835
+   "x": 610,
+   "y": 400
   },
   {
    "id": "llm",
    "group": "agent",
    "label": "LLM",
    "sub": [],
-   "x": 440,
-   "y": 1835
+   "x": 610,
+   "y": 560
   },
   {
    "id": "ats",
    "group": "token",
    "label": "Agentic Token Service",
    "sub": [],
-   "x": 440,
-   "y": 706
+   "x": 620,
+   "y": 40
   },
   {
    "id": "orch",
    "group": "token",
    "label": "Orchrestration",
    "sub": [],
-   "x": 0,
-   "y": 182
+   "x": 625,
+   "y": -30
   },
   {
    "id": "agtsvc",
    "group": "token",
    "label": "Agent",
    "sub": [],
-   "x": 440,
-   "y": 1926
+   "x": 820,
+   "y": -30
   },
   {
    "id": "texc",
    "group": "token",
    "label": "Token Exc",
    "sub": [],
-   "x": 1320,
-   "y": 1835
+   "x": 1030,
+   "y": -30
   },
   {
    "id": "ccred",
    "group": "token",
    "label": "Client Cred",
    "sub": [],
-   "x": 1320,
-   "y": 2017
+   "x": 1260,
+   "y": -30
   },
   {
    "id": "introspect",
    "group": "token",
    "label": "Introspect",
    "sub": [],
-   "x": 1320,
-   "y": 1653
+   "x": 1420,
+   "y": -100
   },
   {
    "id": "authz",
    "group": "token",
    "label": "Authorization",
    "sub": [],
-   "x": 880,
-   "y": 1744
+   "x": 1560,
+   "y": -30
   },
   {
    "id": "gw",
    "group": "gateway",
    "label": "Agent Gateway",
    "sub": [],
-   "x": 440,
-   "y": 1744
+   "x": 900,
+   "y": 390
   },
   {
    "id": "route1",
@@ -168,8 +168,8 @@ export const V2_EXACT = {
    "sub": [
     "mcp-olb.example.com/mcp"
    ],
-   "x": 0,
-   "y": 273
+   "x": 915,
+   "y": 450
   },
   {
    "id": "route2",
@@ -178,56 +178,56 @@ export const V2_EXACT = {
    "sub": [
     "mcp-invest.example.com/mcp"
    ],
-   "x": 0,
-   "y": 379
+   "x": 915,
+   "y": 530
   },
   {
    "id": "mcp_olb",
    "group": "resource",
    "label": "MCP",
    "sub": [],
-   "x": 880,
-   "y": 1835
+   "x": 1150,
+   "y": 350
   },
   {
    "id": "mcp_inv",
    "group": "resource",
    "label": "MCP",
    "sub": [],
-   "x": 880,
-   "y": 1926
+   "x": 1150,
+   "y": 520
   },
   {
    "id": "mcpolb_lbl",
    "group": "grey",
    "label": "mcp-olb.example.com",
    "sub": [],
-   "x": 0,
-   "y": 485
+   "x": 1150,
+   "y": 300
   },
   {
    "id": "mcpinv_lbl",
    "group": "grey",
    "label": "mcp-invest.example.com",
    "sub": [],
-   "x": 0,
-   "y": 576
+   "x": 1150,
+   "y": 590
   },
   {
    "id": "rs",
    "group": "resource",
    "label": "RS",
    "sub": [],
-   "x": 0,
-   "y": 2168
+   "x": 1580,
+   "y": 350
   },
   {
    "id": "api",
    "group": "resource",
    "label": "API",
    "sub": [],
-   "x": 0,
-   "y": 2259
+   "x": 1580,
+   "y": 520
   },
   {
    "id": "olbres",
@@ -237,8 +237,8 @@ export const V2_EXACT = {
     "/balance - scope: balance",
     "/transfer - scope: transfer"
    ],
-   "x": 0,
-   "y": 667
+   "x": 1250,
+   "y": 150
   },
   {
    "id": "invtok",
@@ -248,8 +248,8 @@ export const V2_EXACT = {
     "/balance",
     "API key: 12345"
    ],
-   "x": 0,
-   "y": 805
+   "x": 1360,
+   "y": 610
   },
   {
    "id": "restok",
@@ -260,8 +260,8 @@ export const V2_EXACT = {
     "aud: olb-resource.example.com",
     "scope: balance transfer"
    ],
-   "x": 0,
-   "y": 943
+   "x": 905,
+   "y": 680
   },
   {
    "id": "moltok",
@@ -271,8 +271,8 @@ export const V2_EXACT = {
     "client_id: mcp-olb",
     "aud: mcp-olb.example.com"
    ],
-   "x": 0,
-   "y": 1079
+   "x": 1350,
+   "y": 60
   },
   {
    "id": "htok",
@@ -283,8 +283,8 @@ export const V2_EXACT = {
     "aud: agent1.example.com",
     "scope: agent1"
    ],
-   "x": 0,
-   "y": 1200
+   "x": 40,
+   "y": 560
   },
   {
    "id": "agttok",
@@ -294,8 +294,8 @@ export const V2_EXACT = {
     "client_id: agent1",
     "aud: agent1.example.com"
    ],
-   "x": 0,
-   "y": 1336
+   "x": 380,
+   "y": 560
   },
   {
    "id": "txtok",
@@ -306,24 +306,24 @@ export const V2_EXACT = {
     "aud: <gateway or resource aud>",
     "scope: mcp"
    ],
-   "x": 0,
-   "y": 1457
+   "x": 640,
+   "y": 620
   },
   {
    "id": "apigw1",
    "group": "resource",
    "label": "API Gateway",
    "sub": [],
-   "x": 1320,
-   "y": 1744
+   "x": 1370,
+   "y": 350
   },
   {
    "id": "apigw2",
    "group": "resource",
    "label": "API Gateway",
    "sub": [],
-   "x": 1320,
-   "y": 1926
+   "x": 1370,
+   "y": 520
   }
  ],
  "edges": [
