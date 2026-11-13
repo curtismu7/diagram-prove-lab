@@ -169,9 +169,9 @@ try {
   }
   check(all.length >= 35 && badOnes.length === 0, `all ${all.length} built-in diagrams show every box with no overlap${badOnes.length ? ": " + badOnes.join('; ') : ''}`);
   // Presenter mode: keys, bigger type, no edit or file controls, Esc exits, ?present=1 deep link.
-  await page.goto(`${base}/?d=auth-code-pkce`); await T('present').waitFor();
+  await page.goto(`${base}/?d=auth-code-pkce`); await T('presenter').waitFor();
   const normalFont = await page.evaluate(() => parseFloat(getComputedStyle(document.body).fontSize));
-  await T('present').click();
+  await T('presenter').click();
   check(await page.evaluate(() => parseFloat(getComputedStyle(document.body).fontSize)) > normalFont, 'presenting makes the type bigger');
   check(!(await T('save').isVisible()) && !(await T('edit-toggle').isVisible()), 'presenting hides edit and file controls');
   await page.keyboard.press('ArrowRight');
@@ -232,10 +232,10 @@ try {
   const [stepDl] = await Promise.all([page.waitForEvent('download'), T('export-svg').click()]);
   const stepSvg = fs.readFileSync(await stepDl.path(), 'utf8');
   check((stepSvg.match(/marker-end="url\(#ahh\)"/g) || []).length === 1 && stepSvg.includes('opacity="0.35"'), 'exporting mid-walkthrough highlights exactly the focused arrow and fades later ones');
-  await T('theme').selectOption('dark');
+  await T('theme-select').selectOption('dark');
   const [darkDl] = await Promise.all([page.waitForEvent('download'), T('export-svg').click()]);
   check(fs.readFileSync(await darkDl.path(), 'utf8').includes('fill="#12161d"'), 'dark theme exports a dark page');
-  await T('theme').selectOption(''); await T('reset').click();
+  await T('theme-select').selectOption('auto'); await T('reset').click();
   await page.screenshot({ path: path.join(shots, '5-exports-page.png') });
   fs.writeFileSync(path.join(shots, 'mcp-step-up.png'), png); fs.writeFileSync(path.join(shots, 'mcp-step-up.svg'), svgText);
   // Step and story editor: edit a copy's steps, save, reload, and see them (with story link) on the step cards.
@@ -356,7 +356,7 @@ try {
   await filePage.close();
   // Dark mode, small screen: no horizontal scroll.
   await T('picker').selectOption('mcp-step-up');
-  await T('theme').selectOption('dark');
+  await T('theme-select').selectOption('dark');
   check(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'dark theme applies');
   await page.setViewportSize({ width: 390, height: 800 });
   check(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'no horizontal page scroll at phone width');
@@ -382,7 +382,7 @@ try {
   check(foreign.length === 0, `no request left the origin${foreign.length ? ': ' + foreign.join(', ') : ''}`);
   check(errors.length === 0, `no console or page errors${errors.length ? ': ' + errors.join(' | ') : ''}`);
 } catch (e) {
-  console.log(`FAIL  script error: ${String(e.message).split('\n')[0]}`); failures++;
+  console.log(`FAIL  script error: ${String(e.stack || e.message).split('\n').slice(0,4).join(' | ')}`); failures++;
 } finally {
   await browser.close();
   if (server) server.kill();
