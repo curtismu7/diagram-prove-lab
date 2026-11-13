@@ -5,7 +5,9 @@ import express from 'express';
 import { parseDiagram } from '@diagram-prove-lab/core';
 import { createStore, StoreError } from './store.js';
 import { createHealth } from './health.js';
-import { bindHost, runChecks } from './doctor.js';
+import { bindHost, runChecks, allPassed } from './doctor.js';
+
+const pkgVersion = () => JSON.parse(fs.readFileSync(new URL('../../package.json', import.meta.url), 'utf8')).version;
 import { isMockOnly, mockGuard, mockDataDir } from './mock.js';
 import { shelfInfo } from './shelfLink.js';
 
@@ -16,7 +18,15 @@ export function createApp({ dataDir, env = process.env, webDir = path.resolve(he
   const mockOnly = isMockOnly(env);
   if (mockOnly) dataDir = mockDataDir();
   const store = createStore(dataDir);
-  const health = createHealth({ runChecks: () => runChecks({ env, dataDir }), mockOnly });
+  const health = createHealth({
+    demoId: 'diagram-prove-lab',
+    demoName: 'Diagram Prove Lab',
+    version: pkgVersion(),
+    runChecks: () => runChecks({ env, dataDir }),
+    allPassed,
+    mockOnly: (e) => isMockOnly(e),
+    env,
+  });
   const app = express();
   app.disable('x-powered-by');
 
